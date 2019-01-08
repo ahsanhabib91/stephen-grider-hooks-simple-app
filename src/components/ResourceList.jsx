@@ -1,33 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-class ResourceList extends React.Component {
-  state = { resources: [] };
-  async componentDidMount() {
-    console.log("componentDidMount 1", this.props);
+const useResources = resource => {
+  console.log("useResources called 1", resource);
+  const [resources, setResources] = useState([]);
+  const fetchResource = async resource => {
     const response = await axios.get(
-      `https://jsonplaceholder.typicode.com/${this.props.resource}`
+      `https://jsonplaceholder.typicode.com/${resource}`
     );
-    this.setState({ resources: response.data });
-    console.log("componentDidMount 2", this.props);
-  }
+    console.log("useResources called 3");
+    setResources(response.data);
+    console.log("useResources called 4");
+  };
+  useEffect(
+    () => {
+      console.log("useEffect", resource);
+      fetchResource(resource);
+    },
+    [resource]
+  );
+  console.log("useResources called 2", resource, resources);
+  return resources;
+};
 
-  async componentDidUpdate(prevProps) {
-    console.log("componentDidUpdate 1", this.props);
-    // console.log(prevProps, this.props);
-    if (prevProps.resource !== this.props.resource) {
-      const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/${this.props.resource}`
-      );
-      this.setState({ resources: response.data });
-      console.log("componentDidUpdate 3", this.props);
-    }
-    console.log("componentDidUpdate 2", this.props);
-  }
-  render() {
-    console.log("render", this.props);
-    return <div>{this.state.resources.length}</div>;
-  }
-}
+const ResourceList = props => {
+  console.log("render 1", props.resource);
+  const resources = useResources(props.resource);
+  console.log("render 2", props.resource, resources);
+  return (
+    <ul>
+      {resources.map(data => (
+        <li key={data.id}>{data.title}</li>
+      ))}
+    </ul>
+  );
+};
 
 export default ResourceList;

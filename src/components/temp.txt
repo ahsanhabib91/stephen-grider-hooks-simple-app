@@ -34,3 +34,18 @@ const ResourceList = props => {
 };
 
 export default ResourceList;
+
+
+render {resource: "posts"}
+ResourceList.jsx:7 componentDidMount 1 {resource: "posts"}
+ResourceList.jsx:28 render {resource: "posts"}
+ResourceList.jsx:16 componentDidUpdate 1 {resource: "posts"} {resource: "posts"}
+ResourceList.jsx:25 componentDidUpdate 2 {resource: "posts"}
+ResourceList.jsx:12 componentDidMount 2 {resource: "posts"}
+ResourceList.jsx:28 render {resource: "todos"}
+ResourceList.jsx:16 componentDidUpdate 1 {resource: "posts"} {resource: "todos"}
+ResourceList.jsx:28 render {resource: "todos"}
+ResourceList.jsx:16 componentDidUpdate 1 {resource: "todos"} {resource: "todos"}
+ResourceList.jsx:25 componentDidUpdate 2 {resource: "todos"}
+ResourceList.jsx:23 componentDidUpdate 3 {resource: "todos"}
+ResourceList.jsx:25 componentDidUpdate 2 {resource: "todos"}
