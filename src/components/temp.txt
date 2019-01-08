@@ -1,0 +1,36 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+const useResources = resource => {
+  console.log("useResources called 1");
+  const [resources, setResources] = useState([]);
+  const fetchResource = async resource => {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/${resource}`
+    );
+    console.log("useResources called 2");
+    setResources(response.data);
+  };
+  useEffect(
+    () => {
+      console.log("useEffect", resource);
+      fetchResource(resource);
+    },
+    [resource]
+  );
+  return resources;
+};
+
+const ResourceList = props => {
+  const resources = useResources(props.resource);
+  console.log("render", resources, props.resource);
+  return (
+    <ul>
+      {resources.map(data => (
+        <li key={data.id}>{data.title}</li>
+      ))}
+    </ul>
+  );
+};
+
+export default ResourceList;
